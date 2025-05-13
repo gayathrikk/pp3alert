@@ -111,7 +111,7 @@ public class pp3storage {
         String[] cc = {"venip@htic.iitm.ac.in"};
         String[] bcc = {"divya.d@htic.iitm.ac.in"};
 
-	        String from = "gayathri@htic.iitm.ac.in";
+	        String from = "automationsoftware25@gmail.com";
 	        String host = "smtp.gmail.com";
 
 	        Properties properties = System.getProperties();
@@ -122,7 +122,7 @@ public class pp3storage {
 
 	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 	            protected PasswordAuthentication getPasswordAuthentication() {
-	                return new PasswordAuthentication("gayathri@htic.iitm.ac.in", "Gayu@0918"); // Fix: Use app password
+	                return new PasswordAuthentication("automationsoftware25@gmail.com", "wjzcgaramsqvagxu"); // Fix: Use app password
 	            }
 	        });
 
