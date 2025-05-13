@@ -108,7 +108,8 @@ public class pp3storage {
 
 	    private void sendEmailAlert(String todayFiles, String oldFiles, int todayFileCount, int oldFileCount, String machineName) {
 	        String[] to = {"nathan.i@htic.iitm.ac.in"};
-        String[] cc = {"venip@htic.iitm.ac.in"};
+        String[] cc = {"venip@htic.iitm.ac.in", "nitheshkumarsundhar@gmail.com"};
+
         String[] bcc = {"divya.d@htic.iitm.ac.in"};
 
 	        String from = "automationsoftware25@gmail.com";
