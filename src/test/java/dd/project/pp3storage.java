@@ -106,38 +106,32 @@ public class pp3storage {
 	        }
 	    }  
 
-	    private void sendEmailAlert(String messageBody) {
-	        // Recipient's email ID needs to be mentioned.
-	  String[] to = {"nathan.i@htic.iitm.ac.in"};
-       String[] cc = {"venip@htic.iitm.ac.in", "nitheshkumarsundhar@gmail.com"};
+	   private void sendEmailAlert(String todayFiles, String oldFiles, int todayFileCount, int oldFileCount, String machineName) {
+	        String[] to = {"nathan.i@htic.iitm.ac.in"};
+        String[] cc = {"venip@htic.iitm.ac.in", "nitheshkumarsundhar@gmail.com"};
 
         String[] bcc = {"divya.d@htic.iitm.ac.in"};
-	    
-	        // Sender's email ID needs to be mentioned
+
 	        String from = "automationsoftware25@gmail.com";
-	        // Assuming you are sending email through Gmail's SMTP
 	        String host = "smtp.gmail.com";
-	        // Get system properties
+
 	        Properties properties = System.getProperties();
-	        // Setup mail server
 	        properties.put("mail.smtp.host", host);
 	        properties.put("mail.smtp.port", "465");
 	        properties.put("mail.smtp.ssl.enable", "true");
 	        properties.put("mail.smtp.auth", "true");
-	        // Get the Session object and pass username and password
+
 	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 	            protected PasswordAuthentication getPasswordAuthentication() {
-	                return new PasswordAuthentication("automationsoftware25@gmail.com", "wjzcgaramsqvagxu");
+	                return new PasswordAuthentication("automationsoftware25@gmail.com", "wjzcgaramsqvagxu"); // Fix: Use app password
 	            }
 	        });
-	        // Used to debug SMTP issues
+
 	        session.setDebug(true);
 	        try {
-	            // Create a default MimeMessage object.
 	            MimeMessage message = new MimeMessage(session);
-	            // Set From: header field of the header.
 	            message.setFrom(new InternetAddress(from));
-	            // Set To: header field of the header.
+
 	            for (String recipient : to) {
 	                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 	            }
@@ -147,19 +141,22 @@ public class pp3storage {
 	            for (String bccRecipient : bcc) {
 	                message.addRecipient(Message.RecipientType.BCC, new InternetAddress(bccRecipient));
 	            }
-	            // Set Subject: header field
-	            message.setSubject("pp4.humanbrain.in - STORAGE ALERT ⚠️ ");
-	            // Set the actual message
-	            message.setContent("This email has been automatically generated:<br>" + messageBody + 
-	            	    "Attention and Action Required <br>" + messageBody +
-	            	    "<br>pp4 <b>nvmeShare</b> storage utilization has crossed <b style='color:red;'>70%</b> :<br>" + messageBody + 
-	            	    "<br>Please clear unnecessary files to free up space and avoid storage-related issues.<br>" + messageBody, "text/html");
 
-	            System.out.println("sending...");
-	            // Send message
+	            message.setSubject("ALERT: Old Files Found in " + machineName + " 📂");
+	            String content = "<p>This is an automated alert:</p>" +
+	                    "<p>The directory <b> /mnt/local/nvmestorage/postImageProcessor</b> on machine <b style='color:blue;'>" + machineName + "</b> contains old files.</p>" +
+	                    "<p><b>" + oldFileCount + "</b> old files exist:</p>" +
+	                    "<pre>" + oldFiles + "</pre>" +
+	                    "<p>Please review and take necessary action.</p>" +
+	                    "<p>Best Regards,<br>Automated Monitoring System</p>";
+
+	            message.setContent(content, "text/html");
+	            System.out.println("Sending alert email...");
 	            Transport.send(message);
-	            System.out.println("Sent message successfully....");
+	            System.out.println("Email sent successfully!");
+
 	        } catch (MessagingException mex) {
 	            mex.printStackTrace();
 	        }
-     }}
+	    }
+	}
